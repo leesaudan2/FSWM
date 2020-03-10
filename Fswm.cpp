@@ -21,7 +21,7 @@
  
 void printHelp(){
  std::string help = 
-    "\nUsage: ./fswm [options] <sequence> "
+    "\nUsage: ./fswm [options] <sequence> <outfile>"
     "\n"
     "\n<sequence> format:"  
     "\n\t Sequence must be in FASTA format. All genomes must be contained in one FASTA file. Example:"
@@ -79,9 +79,9 @@ void parseParameters(int argc, char *argv[]){
 	}
 }
 
-void writeDmat(std::vector<std::vector<double> > dmat, std::vector<Sequence>& sequences){
+void writeDmat(const std::string& filename, std::vector<std::vector<double> > dmat, std::vector<Sequence>& sequences){
 	std::ofstream outfile;
-	outfile.open("DMat");
+	outfile.open(filename);
 	outfile << sequences.size() << std::endl;
 	for (int i = 0; i < sequences.size(); i++) 
 	{
@@ -109,13 +109,13 @@ void writeDmat(std::vector<std::vector<double> > dmat, std::vector<Sequence>& se
 }
 
 int main(int argc, char *argv[]){
-	if(argc < 2)
+	if(argc < 3)
 	{
 		printHelp();		
 		exit (EXIT_FAILURE);
 	}
 	parseParameters(argc,  argv);
-	std::string fileName(argv[argc-1]);
+	std::string fileName(argv[argc-2]);
 	Seed seed(weight,dontCare);
 	std::vector<Sequence> sequences = Sequence::read(fileName);
 	std::vector<std::vector<double> >DMat(sequences.size(), std::vector<double>(sequences.size(),0));
@@ -160,6 +160,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 	std::cout << std::endl << "done" << std::endl;
-	writeDmat(DMat, sequences);
-	std::cout << std::endl << "Distances written to file DMat" << std::endl;
+	const std::string& outfile = argv[argc-1];
+	writeDmat(outfile, DMat, sequences);
+	std::cout << std::endl << "Distances written to file " << outfile << std::endl;
 }

@@ -5,27 +5,36 @@ The program takes a set of genomic sequences as input and generates a distance m
 Usage:
 to compile type: make
 
-run with: ./fswm [options] <sequences >
+run with: ./fswm [options] &lt;sequences&gt; &lt;outfile&gt;
 
-<sequence> format:
+&lt;sequence&gt; format:
 
 The input sequences must be contained in one single file FASTA format. Each species/genome must be represented by one single sequence in the input FASTA file. If you have multiple reads, contigs or chromosomes per input species, please concatenate them to one single sequence to make sure each species/genome corresponds to only one sequence. Example:
 
-\>Genome1\
-ATAGTAGATGAT..\
-\>Genome2\
-ATAGTAGTAGTAG..\
-\>Genome3\
-ATGATGATGATGATG..\
-..\
+```
+>Genome1
+ATAGTAGATGAT..
+>Genome2
+ATAGTAGTAGTAG..
+>Genome3
+ATGATGATGATGATG..
+```
+..
 etc.
+
+&lt;outfile&gt; format:
+* First line: an integer &lt;n&gt; = no. of sequences.
+* Subsequent &lt;n&gt; lines: tab-delimited fields:
+  * First field: sequence name
+  * Subsequent &lt;n&gt; fields: distance values
+
 
 options:
 
 -h: print this help and exit\
--k <integer>: pattern weight (default 12)\
--t <integer>: numer of threads (default: 10)\
--s <integer>: the minimum score of a spaced-word match to be considered homologous (default: 0)
+-k &lt;integer&gt;: pattern weight (default 12)\
+-t &lt;integer&gt;: numer of threads (default: 10)\
+-s &lt;integer&gt;: the minimum score of a spaced-word match to be considered homologous (default: 0)
 
 
 Scientific publications using filtered spaced word matches should cite:
