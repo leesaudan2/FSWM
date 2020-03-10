@@ -85,21 +85,15 @@ void writeDmat(const std::string& filename, std::vector<std::vector<double> > dm
 	outfile << sequences.size() << std::endl;
 	for (int i = 0; i < sequences.size(); i++) 
 	{
-		std::string name = sequences[i].getHeader();
-		for(int k = 0; k < 10; k++){
-			if(k >= name.length())
-				outfile << " ";
-			else
-				outfile << name[k];
-		}
+		outfile << sequences[i].getHeader();
      	for (int j = 0; j < sequences.size(); j++) 
      	{
 			if (i > j) 
-	    			outfile << std::fixed <<std::setprecision(12) << dmat[i][j] << "  ";
+	    			outfile << '\t' << std::fixed <<std::setprecision(12) << dmat[i][j];
 			else if(j>i)
-				outfile << std::fixed<< std::setprecision(12) << dmat[j][i] << "  ";
+				outfile << '\t' << std::fixed<< std::setprecision(12) << dmat[j][i];
 			else
-					outfile << std::setprecision(12) << "0" << "  ";
+					outfile << '\t' << std::setprecision(12) << "0" << "  ";
      	}
       		outfile << std::endl;
 	}
